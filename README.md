@@ -19,7 +19,7 @@ The SQL queries utilized to clean, Organize, and prepare data for the dashboard 
 Targeted SQL queries regarding various business questions can be found here
 
 # Static Dashboard: 
-![NikeReport](ReportImages/DashboardImage.png)
+![NikeReport](Report Images/Dashboard Image.png)
 
 
 # Executive Summary:
