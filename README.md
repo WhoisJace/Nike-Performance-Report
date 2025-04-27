@@ -19,6 +19,8 @@ The SQL queries utilized to clean, Organize, and prepare data for the dashboard 
 Targeted SQL queries regarding various business questions can be found here
 
 # Static Dashboard: 
+![NikeReport](ReportImages/DashboardImage.png)
+
 
 # Executive Summary:
 In 2024, Greater China emerged as the top-performing region, generating the highest revenue at $805 million. Revenue distribution across all regions was relatively balanced, with Americas and Japan each contributing 15.6%, Europe accounting for 12.7%, India at 14.7%, South Korea at 13.9%, and Southeast Asia at 11.5%. Although Greater China led the way, the overall distribution indicates strong global performance with no region overwhelmingly dominating, reflecting a healthy diversification of sales across markets.
