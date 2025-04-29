@@ -1,0 +1,8 @@
+SELECT *
+FROM [BazileProjectDatabase2025].[dbo].[nike_sales_2024]
+
+SELECT DISTINCT Main_Category
+FROM [BazileProjectDatabase2025].[dbo].[nike_sales_2024]
+
+SELECT Region, Main_Category, Revenue_USD, Online_Sales_Percentage
+FROM [BazileProjectDatabase2025].[dbo].[nike_sales_2024];
