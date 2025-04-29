@@ -1,0 +1,2 @@
+ALTER TABLE [BazileProjectDatabase2025].[dbo].[nike_sales_2024] ALTER COLUMN Revenue_USD BIGINT;
+-- Nothing major just need to alter the table and make it BIGINT
