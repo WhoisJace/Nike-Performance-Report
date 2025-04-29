@@ -1,0 +1,5 @@
+-- Which region has the most total revenue?
+SELECT Region, SUM(Revenue_USD) AS "totalrevenue"
+FROM [BazileProjectDatabase2025].[dbo].[nike_sales_2024]
+GROUP BY Region
+ORDER BY totalrevenue DESC
