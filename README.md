@@ -16,7 +16,7 @@ The company has a significant amount of data pertaining to sales over the year f
 - An interactive PowerBI dashboard can be downloaded Click [here](sql/customer_analysis.sql)
 - The SQL queries utilized to inspect and perform quality checks can be found here
 - The SQL queries utilized to clean, Organize, and prepare data for the dashboard can be found here
-- Targeted SQL queries regarding various business questions can be found here
+- Targeted SQL queries regarding various business questions can be found Click [here](SQL_Queries/Targeted_SQL_Query)
 
 # Static Dashboard: 
 ![Nike Dashboard](Report_Images/Dashboard_Image.png)
