@@ -19,7 +19,8 @@ The SQL queries utilized to clean, Organize, and prepare data for the dashboard 
 Targeted SQL queries regarding various business questions can be found here
 
 # Static Dashboard: 
-https://github.com/WhoisJace/Nike-Performance-Report/blob/0f96193030b3c9920fb2e800ec5b601c90a5822c/Report_Images/Dashboard_Image.png 
+![Nike Dashboard](Report_Images/Dashboard_Image.png)
+
 
 
 # Executive Summary:
