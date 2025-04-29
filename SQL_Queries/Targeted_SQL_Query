@@ -3,3 +3,96 @@ SELECT Region, SUM(Revenue_USD) AS "totalrevenue"
 FROM [BazileProjectDatabase2025].[dbo].[nike_sales_2024]
 GROUP BY Region
 ORDER BY totalrevenue DESC
+
+-- How do sales trends fluctuate by month across different product categories.
+WITH MonthlySales AS (
+    SELECT 
+        Main_Category, 
+        CASE 
+            WHEN [Month] = 'January' THEN 1
+            WHEN [Month] = 'February' THEN 2
+            WHEN [Month] = 'March' THEN 3
+            WHEN [Month] = 'April' THEN 4
+            WHEN [Month] = 'May' THEN 5
+            WHEN [Month] = 'June' THEN 6
+            WHEN [Month] = 'July' THEN 7
+            WHEN [Month] = 'August' THEN 8
+            WHEN [Month] = 'September' THEN 9
+            WHEN [Month] = 'October' THEN 10
+            WHEN [Month] = 'November' THEN 11
+            WHEN [Month] = 'December' THEN 12
+        END AS Month_Number,
+        [Month],
+        SUM(Revenue_USD) AS Totalvalue
+    FROM [BazileProjectDatabase2025].[dbo].[nike_sales_2024]
+    GROUP BY Main_Category, [Month]
+)
+SELECT 
+    Main_Category,
+    Month_Number,
+    [Month],
+    Totalvalue,
+    LEAD(Totalvalue) OVER (PARTITION BY Main_Category ORDER BY Month_Number) AS NextMonthRev,
+    (LEAD(Totalvalue) OVER (PARTITION BY Main_Category ORDER BY Month_Number) - Totalvalue) AS Difference,
+    CONCAT(
+        ROUND(
+            ((LEAD(Totalvalue) OVER (PARTITION BY Main_Category ORDER BY Month_Number) - Totalvalue) * 100) 
+            / NULLIF(Totalvalue, 0), 2
+        ), '%'
+    ) AS PercentageChange
+FROM MonthlySales
+ORDER BY Main_Category, Month_Number;
+
+-- Which price tier had the highest total revenue and units sold in each region. 
+WITH RevenueandUnits AS(
+SELECT Region,
+	Price_Tier, 
+	SUM(Revenue_USD) AS "totalrevenue", 
+	SUM(Units_Sold) AS "totalunitssold",
+	RANK() OVER (PARTITION BY Region ORDER BY SUM(Revenue_USD) DESC) AS revenue_rank,
+	RANK() OVER (PARTITION BY Region ORDER BY SUM(Units_Sold) DESC) AS units_rank
+FROM [BazileProjectDatabase2025].[dbo].[nike_sales_2024]
+GROUP BY Region, Price_Tier
+)
+
+SELECT *
+FROM RevenueandUnits
+WHERE revenue_rank = '1' OR units_rank = '1'
+
+-- What percentage of total revenue comes from online sales, and how does it vary by region and product category?
+SELECT CONCAT(SUM(Online_Sales_Percentage) / 1000, '%') AS OnlineSalesPercentage
+FROM [BazileProjectDatabase2025].[dbo].[nike_sales_2024]
+
+SELECT Main_Category, CONCAT(SUM(Online_Sales_Percentage) / 1000, '%') AS OnlineSalesPercentage
+FROM [BazileProjectDatabase2025].[dbo].[nike_sales_2024]
+GROUP BY Main_Category
+
+SELECT Sub_Category, CONCAT(SUM(Online_Sales_Percentage) / 1000, '%') AS OnlineSalesPercentage
+FROM [BazileProjectDatabase2025].[dbo].[nike_sales_2024]
+GROUP BY Sub_Category
+
+-- Which product line had the highest sales in terms of units sold and revenue, and how does this compare across different regions?
+SELECT Product_Line, 
+		SUM(Units_Sold) AS TotalUnitsSold, 
+		SUM(Revenue_USD) AS TotalRevenue,
+		RANK() OVER (ORDER BY SUM(Units_Sold) DESC) AS UnitsSoldRank,
+		RANK() OVER (ORDER BY SUM(Revenue_USD) DESC) AS RevenueRank
+FROM [BazileProjectDatabase2025].[dbo].[nike_sales_2024]
+GROUP BY Product_Line
+ORDER BY TotalUnitsSold DESC
+-- This query above returs the rank of all product lines 
+
+WITH SalesPerformance AS (
+	SELECT Product_Line, 
+		SUM(Units_Sold) AS TotalUnitsSold, 
+		SUM(Revenue_USD) AS TotalRevenue,
+		RANK() OVER (ORDER BY SUM(Units_Sold) DESC) AS UnitsSoldRank,
+		RANK() OVER (ORDER BY SUM(Revenue_USD) DESC) AS RevenueRank
+FROM [BazileProjectDatabase2025].[dbo].[nike_sales_2024]
+GROUP BY Product_Line
+)
+
+SELECT *
+FROM SalesPerformance
+WHERE UnitsSoldRank = '1' OR RevenueRank = '1'
+-- The above query returns only the top ranked product line based on Revenue and top ranked based on Units Sold.
